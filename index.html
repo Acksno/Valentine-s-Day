@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day App</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #ffc0cb; /* Valentine's Day pink */
+      background-image: url('valentines_background.jpg'); /* Valentine's Day background image */
+      background-size: cover;
+      position: relative;
+      color: white;
+    }
+
+    #heartContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      font-size: 24px;
+      animation: float 5s linear infinite; /* Floating animation */
+      filter: drop-shadow(0px 0px 5px rgba(255, 0, 0, 0.7)); /* Feather effect */
+    }
+
+    .language-container {
+      position: absolute;
+      top: calc(50% + 400px); /* Position below the message */
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .language-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      outline: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .language-button:hover {
+      background-color: #ff3333;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      outline: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-button:hover {
+      background-color: #ff3333;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 99999;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .overlay-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .overlay-button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      outline: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .overlay-button:hover {
+      background-color: #ff3333;
+    }
+
+    .message-content {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 99999;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .message-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgb(216, 143, 143);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      color: #ff4d4d;
+      cursor: pointer;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh);
+      }
+      100% {
+        transform: translateY(-100vh);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    #valentineWish {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .background-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      font-size: 12px; /* Decreased font size */
+      font-weight: lighter;
+      opacity: 0.2; /* Light intensity */
+      pointer-events: none; /* Avoids interfering with clicks */
+      transition: color 0.3s ease; /* Transition effect */
+    }
+
+    .background-text:hover {
+      color: #ff4d4d; /* Highlight color on hover */
+    }
+  </style>
+</head>
+<body>
+  <div id="heartContainer"></div>
+
+  <div id="valentineWish">
+    <p>Happy Valentine's Day My Love. On 14-02-2027, we'll celebrate this day in Our home😘</p>
+  </div>
+
+  <div class="language-container">
+    <button class="language-button" onclick="toggleModal()">Choose What You Want to Know Wifie</button>
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <button class="modal-button" onclick="displayOverlay('love')">Love</button>
+        <button class="modal-button" onclick="displayError()">Hate</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="overlay-content">
+      <button class="overlay-button" onclick="displayMessage('pure-love')">Best thing about you</button>
+      <button class="overlay-button" onclick="displayMessage('more-attractive')">Most attractive of you</button>
+      <button class="overlay-button" onclick="displayMessage('dont-like')">Things I don't like</button>
+      <button class="overlay-button" onclick="displayMessage('why-love')">Why I love you</button>
+      <button class="overlay-button" onclick="displayMessage('how-important')">How important you are</button>
+      <button class="overlay-button" onclick="displayMessage('life-without')">Life without you</button>
+    </div>
+  </div>
+
+  <div class="message-content" id="messageContent">
+    <div class="message-text">
+      <span class="close-button" onclick="closeMessage()">×</span>
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <script>
+    function createHearts() {
+      const numHearts = Math.floor(Math.random() * 5) + 5; // Random number of hearts between 5 and 9
+      for (let i = 0; i < numHearts; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤️'; /* Heart emoji */
+
+        const left = Math.random() * window.innerWidth;
+        const top = Math.random() * window.innerHeight;
+        heart.style.left = left + 'px';
+        heart.style.top = top + 'px';
+
+        document.getElementById('heartContainer').appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000); /* Adjusted time for heart to float */
+      }
+    }
+
+    setInterval(createHearts, 2000); /* Adjusted interval for heart creation */
+
+    function toggleModal() {
+      const modal = document.getElementById('modal');
+      modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function displayOverlay(option) {
+      const overlay = document.getElementById('overlay');
+      overlay.style.display = 'block';
+    }
+
+    function displayError() {
+      alert('No results found.');
+    }
+
+    function displayMessage(type) {
+      const messageContent = document.getElementById('messageContent');
+      const message = document.getElementById('message');
+
+      messageContent.style.display = 'block';
+
+      switch (type) {
+        case 'pure-love':
+          message.innerHTML = "Pure Love represents You My Love. Unnoda Heart romba pure ah iruku. Naan kova patten na Azhura nee, Yepovavathu hurt aanen na neeyum kashta padura. Yellamey yenaku Romba pudichiruku. Unnoda Cute aana paechu, voice yellam Best di. You are the Best wife For me";
+          break;
+        case 'more-attractive':
+          message.innerHTML = "Ithuku Answer - Nee than. Un Love than. Un character yenna attract pannitu di. Apdiyeeeee Un Love la Vizhuntuten.";
+          break;
+        case 'dont-like':
+          message.innerHTML = "Apdi yethum illa di. Kethsia nu ulla name la irunthey yenaku unna pudikum. Letter K yennoda fav letter aagitu. Sooo... un kitta pudikatathu nu yethumey illa.";
+          break;
+        case 'why-love':
+          message.innerHTML = "Truth yenna na... Athum nee than. Class nee irukurathu, bomma matri irupa di cute ah. Un Character is awesome. Yarum hurt aaga koodathu nu paesuva ( Cls la). Scl padikum boothu un face ka keezha kannu ponathu illa,  apo decide pannunen ithu lust illa Love than nu. Aprom un kooda paesa paesa Love kooditey pochu. Ipo peak la iruku Un maela Love. Ipo Un photo chat wallpaper la paakum boothu un kooda chanda poodavey thoonala. Moreover Nee yen maela vachiruka Love than Unna naan intha naal vara deep ah love panrathuku reason.";
+          break;
+        case 'how-important':
+          message.innerHTML = "My Love,  Unna Lover ah nenachatha vida Wife ah than nenaikuren ithana Years ah. Yepo nee yenna Husband ah yaetuittiyo apovey unakaga yen uiyir ah kooda taralam nu mudivu panniten. Yean na yen kitta kaasu kedayathu, azhagu kedayathu, brilliant illa, outfit nalla irukathu nu yellam terinjum yen maela nee vachiruka kaadhal, yellam terinjum yen ooda vaazhalam nu nee solra Love. Recent ah nee sonna ila 'Un kooda kudisa v2la naalum vaahzlam, yenaku nee than vaenum' nu, apo yenaku nee yen maela vachiruka love romba deep nu clear ah purinji. Un Life la naan yepdi importanto apdi than yen Life la nee";
+          break;
+        case 'life-without':
+          message.innerHTML = "<span style='font-size: 50px;'>⚰️</span><br><br>Life without you.";
+          break;
+      }
+    }
+
+    function closeMessage() {
+      const messageContent = document.getElementById('messageContent');
+      messageContent.style.display = 'none';
+    }
+
+        // Function to create and position "Kethsia Acksno" text elements
+        function createBackgroundText() {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const numTexts = 50; // Number of times "Kethsia Acksno" will be displayed
+
+      for (let i = 0; i < numTexts; i++) {
+        const text = document.createElement('div');
+        text.classList.add('background-text');
+        text.innerHTML = 'Kethsia Acksno';
+
+        const left = Math.random() * screenWidth;
+        const top = Math.random() * screenHeight;
+        text.style.left = left + 'px';
+        text.style.top = top + 'px';
+
+        document.body.appendChild(text);
+      }
+    }
+
+    createBackgroundText(); // Call the function to create background texts
+  </script>
+</body>
+</html>
